@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-dark-green: #004f35;
+  --color-dark-blue: #0f334d;
+  --color-dark-red: #92140c;
+  --color-grey: #7c898b;
+  --color-white: #fff8f0;
+  --color-bright-green: #CCFF4C;
+  --color-bright-orange: #f8520e;
+
+  /* indicators */
+  --color-indicator-ready: var(--color-bright-green);
+  --color-indicator-action: var(--color-bright-orange);
+  --color-indicator-ready-glow: color-mix(in srgb, var(--color-indicator-ready) 50%, transparent);
+  --color-indicator-action-glow: color-mix(in srgb, var(--color-indicator-action) 50%, transparent);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Indicator System */
+.indicator {
+  transition: all 0.3s ease;
+}
+
+.indicator--ready {
+  fill: var(--color-indicator-ready);
+  filter: drop-shadow(0 0 9px var(--color-indicator-ready-glow));
+}
+
+.indicator--action .indicator__shape {
+  fill: var(--color-indicator-action);
+  filter: none;
+  transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.indicator-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-indicator-ready);
+  filter: drop-shadow(0 0 6px var(--color-indicator-ready-glow));
+}
+
+/* State Management для ArrowIcon */
+.group:hover .indicator--action .indicator__shape {
+  filter: brightness(1.3);
+}
+
+.group.is-toggled .indicator--action .indicator__shape {
+  filter: brightness(1.3) url(#premium-glow);
+}

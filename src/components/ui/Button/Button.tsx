@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { clsx } from 'clsx';
 import ArrowIcon from './ArrowIcon';
+import { useCard } from '../Card/context/useCard';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -11,7 +12,6 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-// Design Tokens для размеров
 const sizeTokens = {
   sm: {
     button: 'px-3 py-1.5 text-sm',
@@ -62,9 +62,22 @@ export const Button = ({
   variant = 'dot'
 }: ButtonProps) => {
   const [toggled, setToggled] = useState(false);
+  
+  let toggleSliderFromContext: (() => void) | undefined;
+  
+  try {
+    const cardContext = useCard();
+    toggleSliderFromContext = cardContext.toggleSlider;
+  } catch (error) {
+    toggleSliderFromContext = undefined;
+  }
 
   const handleClick = () => {
     if (!disabled) {
+      if (variant === 'arrow' && toggleSliderFromContext) {
+        toggleSliderFromContext();
+      }
+      
       setToggled(!toggled);
       onClick?.();
     }
@@ -79,7 +92,7 @@ export const Button = ({
 
   const buttonClass = clsx(
     'rounded-none font-medium transition-all duration-200 group',
-    sizeTokens[size].button, // ← Паддинги из системы размеров
+    sizeTokens[size].button,
     variantStyles[variant],
     {
       'opacity-50 cursor-not-allowed': disabled,
@@ -98,7 +111,7 @@ export const Button = ({
       <span className={clsx(
         "flex items-center justify-center",
         variant === 'dot' || variant === 'arrow' 
-          ? sizeTokens[size].gap // ← Gap из системы размеров
+          ? sizeTokens[size].gap
           : 'gap-0'
       )}>
         {children}

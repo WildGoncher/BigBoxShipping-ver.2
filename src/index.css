@@ -1,23 +1,31 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  --color-dark-green: #004f35;
-  --color-dark-blue: #0f334d;
-  --color-dark-red: #92140c;
-  --color-grey: #7c898b;
-  --color-white: #fff8f0;
-  --color-bright-green: #CCFF4C;
-  --color-bright-orange: #f8520e;
+  --color-dark-green: rgba(0, 79, 53, 1);
+  --color-dark-blue: rgba(15, 51, 77, 1);
+  --color-dark-red: rgba(146, 20, 12, 1);
+  --color-grey: rgba(124, 137, 139, 1);
+  --color-white: rgba(255, 248, 240, 1);
+  --color-bright-green: rgba(204, 255, 76, 1);
+  --color-bright-orange: rgba(248, 82, 14, 1);
 
   /* indicators */
   --color-indicator-ready: var(--color-bright-green);
   --color-indicator-action: var(--color-bright-orange);
-  --color-indicator-ready-glow: color-mix(in srgb, var(--color-indicator-ready) 50%, transparent);
-  --color-indicator-action-glow: color-mix(in srgb, var(--color-indicator-action) 50%, transparent);
+  --color-indicator-ready-glow: color-mix(
+    in srgb,
+    var(--color-indicator-ready) 50%,
+    transparent
+  );
+  --color-indicator-action-glow: color-mix(
+    in srgb,
+    var(--color-indicator-action) 50%,
+    transparent
+  );
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* Indicator System */

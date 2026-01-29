@@ -1,33 +1,37 @@
-import React from 'react';
-import { useCard } from './context/useCard';
+import React from "react";
+import { CardContext } from "./Card";
+import { useContext } from "react";
 
 interface CardSliderProps {
   children: React.ReactNode;
   className?: string;
 }
 
-const CardSlider: React.FC<CardSliderProps> = ({ 
-  children, 
-  className = '' 
+
+const CardSlider: React.FC<CardSliderProps> = ({
+  children,
+  className = "",
 }) => {
-  const { isSliderOpen } = useCard();
-  
+  const context = useContext(CardContext);
+  const isOpen = context?.isOpen ?? false;
+
   return (
-    <div className={`
+    <div
+      className={`
       overflow-hidden 
       transition-all 
-      duration-400 
+      duration-500 
       ease-in-out
 transform-gpu 
-      ${isSliderOpen 
-        ? 'max-h-96 opacity-100 mt-4 scale-y-100' 
-        : 'max-h-0 opacity-0 scale-y-95'
+      ${
+        isOpen
+          ? "max-h-96 opacity-100 mt-4 scale-y-100"
+          : "max-h-0 opacity-0 scale-y-95"
       }
       ${className}
-    `}>
-      <div className="pt-4 border-t border-white/20">
-        {children}
-      </div>
+    `}
+    >
+      <div className="pt-4 border-t border-white/20">{children}</div>
     </div>
   );
 };

@@ -70,7 +70,7 @@ export const Hero: FC<HeroProps> = ({
 
 
           <Button
-          variant="hero" size="lg" onClick={onCtaClick} aria-label={ctaText} toggled={false}>Рассчитать стоимость</Button>
+          variant="outline" size="lg" onClick={onCtaClick} aria-label={ctaText} toggled={false}>Рассчитать стоимость</Button>
 
 
         </div>

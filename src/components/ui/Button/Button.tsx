@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { clsx } from "clsx";
 import ArrowIcon from "./ArrowIcon";
 
@@ -7,11 +8,13 @@ export interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
-  variant?:  "dot" | "arrow" | "hero";
+  variant?: "dot" | "arrow" | "outline";
   size?: "sm" | "md" | "lg";
+  width?: string;
   toggled?: boolean;
-  defaultToggled?: boolean;
-  onToggle?: (toggled: boolean) => void;
+  arrowDirection?: "left" | "right" | "up" | "down";
+  arrowGlowIntensity?: number;
+  className?: string;
 }
 
 const sizeTokens = {
@@ -37,11 +40,15 @@ const Indicator = ({
   disabled,
   toggled,
   size = "md",
+  arrowDirection = "down",
+  arrowGlowIntensity = 0.3,
 }: {
   variant: string;
   disabled: boolean;
   toggled: boolean;
   size?: "sm" | "md" | "lg";
+  arrowDirection?: "left" | "right" | "up" | "down";
+  arrowGlowIntensity?: number;
 }) => {
   if (disabled) return null;
 
@@ -49,81 +56,112 @@ const Indicator = ({
     return (
       <span
         className={clsx(
-          "indicator indicator-dot rounded-full",
+          "indicator indicator-dot rounded-full transition-all duration-300",
           sizeTokens[size].indicator,
-          { "is-toggled": toggled },
+          {
+            "opacity-100 filter drop-shadow-[0_0_8px_var(--color-indicator-ready-glow)]":
+              toggled,
+            "opacity-80": !toggled,
+          },
         )}
+        style={{
+          background: "var(--color-indicator-ready)",
+        }}
       />
     );
   }
+
   if (variant === "arrow") {
-    return <ArrowIcon toggled={toggled} size={size} />;
+    return (
+      <ArrowIcon
+        direction={arrowDirection}
+        size={size}
+        glowIntensity={toggled ? 0.8 : arrowGlowIntensity}
+        toggled={toggled}
+      />
+    );
   }
-    return null;
+
+  return null;
 };
 
 export const Button = ({
   children,
   size = "md",
+  width,
   onClick,
   type = "button",
   disabled = false,
   variant = "dot",
   toggled = false,
+  arrowDirection = "down",
+  arrowGlowIntensity = 0.3,
+  className = "",
 }: ButtonProps) => {
+  const [isPressed, setIsPressed] = useState(false);
+
   const handleClick = () => {
     if (disabled) return;
     onClick?.();
+
+    if (variant === "dot") {
+      setIsPressed(true);
+    }
   };
 
+  useEffect(() => {
+    if (!isPressed) return;
+
+    const timer = setTimeout(() => {
+      setIsPressed(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [isPressed]);
+
   const variantStyles = {
-    dot: "bg-grey/50 backdrop-blur-[2px] border border-grey text-white font-medium",
-    arrow:
+    dot: clsx(
       "bg-grey/50 backdrop-blur-[2px] border border-grey text-white font-medium",
-    hero: clsx(
-  "bg-white/10 backdrop-blur-sm",
-  "text-white font-medium",
-  "rounded-lg",
-  
-  "relative overflow-hidden",
-  
-  "border border-3 border-bright-green/70", 
-  
-  // inside glow
-  "shadow-[inset_0_0_5px_rgba(204,255,76,0.15)]", // Зеленое свечение внутри
-  
-  // 5. Внешняя тень для объема
-  "shadow-sm",
-  
-  // 6. 🌟 ИНДИКАТОР при toggled (усиливаем свечение)
-  toggled && clsx(
-    "border-#CCFF4C]", // Обводка становится ярче
-    "shadow-[inset_0_0_30px_rgba(204,255,76,0.3)]", // Сильное свечение внутри
-    "shadow-[0_0_25px_rgba(204,255,76,0.2)]", // И немного снаружи
-  ),
-  
-  // 7. Эффекты при наведении
-  "hover:border-bright-green/70",
-  "hover:shadow-[inset_0_0_10px_rgba(204,255,76,0.4)]",
-  "active:scale-95",
-  
-  // 8. Размер для hero (больше стандартного)
-  "px-10 py-4 text-xl",
-  
-  // 9. Анимации
-  "transition-all duration-300",
-),
-  
-};
+      "transition-all duration-300",
+      !disabled && "hover:brightness-110",
+      disabled && "opacity-40 cursor-not-allowed",
+    ),
+    arrow: clsx(
+      "bg-grey/50 backdrop-blur-[2px] border border-grey text-white font-medium",
+      "transition-all duration-300",
+      !disabled && "hover:brightness-110",
+      disabled && "opacity-40 cursor-not-allowed",
+    ),
+    outline: clsx(
+      "bg-[var(--color-white)]/10 backdrop-blur-sm",
+      "text-[var(--color-white)] font-medium rounded-lg",
+      "border-3 border-[var(--color-bright-green)]/70",
+      "shadow-[inset_0_0_5px_var(--color-bright-green-shadow-15)]",
+      "shadow-sm",
+      toggled &&
+        clsx(
+          "border-[var(--color-bright-green)]",
+          "shadow-[inset_0_0_30px_var(--color-bright-green-shadow-30)]",
+          "shadow-[0_0_25px_var(--color-bright-green-shadow-30)]",
+        ),
+      "hover:border-[var(--color-bright-green)]/70",
+      "hover:shadow-[inset_0_0_10px_var(--color-bright-green-shadow-40)]",
+      "active:scale-95",
+      "px-10 py-4 text-xl",
+      "transition-all duration-300",
+    ),
+  };
+
   const buttonClass = clsx(
-    "rounded-none font-medium transition-all duration-200 group",
+    "rounded-none font-medium group",
+    "inline-flex items-center justify-between",
+    "flex-shrink-0",
     sizeTokens[size].button,
     variantStyles[variant],
     {
-      "opacity-50 cursor-not-allowed": disabled,
-      "hover:brightness-110 active:scale-95": !disabled,
-      "is-toggled": toggled && !disabled,
-      "rounded-none": variant !== "hero",
+      "cursor-pointer": !disabled,
+      "cursor-not-allowed": disabled,
+      "active:scale-95": !disabled && variant !== "outline",
     },
   );
 
@@ -133,21 +171,38 @@ export const Button = ({
       onClick={handleClick}
       disabled={disabled}
       className={buttonClass}
+      style={
+        width
+          ? {
+              width,
+              minWidth: width,
+            }
+          : {
+              minWidth: "fit-content",
+            }
+      }
+      aria-pressed={variant === "arrow" ? toggled : undefined}
     >
       <span
         className={clsx(
-          "flex items-center justify-center",
+          "flex items-center justify-between w-full",
+          "min-w-0",
           variant === "dot" || variant === "arrow"
             ? sizeTokens[size].gap
             : "gap-0",
         )}
       >
-        {children}
+        <span className={clsx("truncate", "flex-1", "text-left")}>
+          {children}
+        </span>
+
         <Indicator
           variant={variant}
           disabled={disabled}
-          toggled={toggled}
+          toggled={variant === "dot" ? isPressed : toggled}
           size={size}
+          arrowDirection={arrowDirection}
+          arrowGlowIntensity={arrowGlowIntensity}
         />
       </span>
     </button>

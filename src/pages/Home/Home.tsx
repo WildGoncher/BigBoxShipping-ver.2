@@ -7,6 +7,8 @@ import { Hero } from "./sections/Hero";
 import { Button } from "../../components/ui/Button";
 
 
+
+
 export const Home = () => {
   const [openCardId, setOpenCardId] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,6 +34,8 @@ export const Home = () => {
     alert(`Заказ контейнера: ${containerId}`);
   };
 
+
+
   return (
     <div className="relative min-h-screen">
       {/* Меню - уже работает */}
@@ -53,13 +57,23 @@ export const Home = () => {
           // Дополнительные классы если нужны
           className="hero-fade-in"
         />
-        
-        {/* Здесь позже будут другие секции:
-            - InfoSection (с вкладками)
-            - ContainerShowcase (ваши карточки)
-            - ProcessSection (процесс доставки)
-            - ContactSection
-        */}
+
+        {
+
+<div className="space-y-6 max-w-4xl mx-auto">
+
+            {containers.map((container) => (
+              <ContainerCard
+                key={container.id}
+                container={container}
+                isOpen={openCardId === container.id}
+                onToggle={() => toggleCard(container.id)}
+                onOrder={() => handleOrder(container.id)}
+              />
+            ))}
+          </div>
+        }
+
         
       </main>
     </div>  );

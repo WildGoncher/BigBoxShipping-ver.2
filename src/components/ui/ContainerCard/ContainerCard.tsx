@@ -47,8 +47,9 @@ export const ContainerCard = ({
           variant="arrow"
           toggled={isOpen}
           onClick={onToggle}
+          width="160px"
         >
-          {isOpen ? "Свернуть" : "Развернуть"}
+          {isOpen ? "Скрыть" : "Показать"}
         </Button>
         <Button variant="dot" onClick={onOrder}>
           Заказать

@@ -117,3 +117,6 @@ dist
 *.swp
 *.swo
 *~
+
+
+/src/assets/

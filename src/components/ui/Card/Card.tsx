@@ -22,14 +22,14 @@ const Card: React.FC<CardProps> = ({
   variant = "default",
   isOpen,
   onToggle,
-}) => {
+}) => { 
   const baseStyles =
     "rounded-sm p-8 backdrop-blur-md transition-all duration-300";
 
   const variantStyles = {
-    default: "bg-white/10 border border-white/20",
-    outlined: "bg-transparent border-2 border-dark-green",
-    elevated: "bg-white/15 border border-white/30 shadow-2xl",
+    default: "bg-bbs-white/10 border border-bbs-grey/20",
+    outlined: "bg-transparent border-2 border-bbs-green",
+    elevated: "bg-bbs-white/15 border border-bbs-white/30 shadow-2xl",
   };
 
   const currentVariantStyle = variantStyles[variant];

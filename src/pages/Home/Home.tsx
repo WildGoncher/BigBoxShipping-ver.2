@@ -1,20 +1,17 @@
 // src/pages/Home/Home.tsx
 import { useState } from "react";
-import { ContainerCard } from "../../components/ui/ContainerCard/ContainerCard";
-import { containers } from "../../data/containers";
-import { Menu, MENU_CONSTANTS } from "../../components/ui/Menu"; 
+import { Menu, MENU_CONSTANTS } from "../../components/ui/Menu";
 import { Hero } from "./sections/Hero";
-import { Button } from "../../components/ui/Button";
-
-
-
+import { Prices } from "./sections/prices/Prices";
+import { ContainersTypes } from "./sections/containers/ContainersTypes";
+import { Process } from "./sections/process/Process";
 
 export const Home = () => {
   const [openCardId, setOpenCardId] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   const toggleCard = (id: string) => {
-    setOpenCardId(prev => prev === id ? null : id);
+    setOpenCardId((prev) => (prev === id ? null : id));
   };
 
   const toggleMenu = () => {
@@ -34,16 +31,17 @@ export const Home = () => {
     alert(`Заказ контейнера: ${containerId}`);
   };
 
-
-
+  const handleCityChange = (city) => {
+    console.log("Выбран город:", city.name);
+    // Здесь можно добавить логику обработки выбора города
+  };
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-cover bg-center bg-fixed bg-[url('/images/backgrounds/Sea_bg.png')]">
       {/* Меню - уже работает */}
       <Menu isOpen={isMenuOpen} onToggle={toggleMenu} />
-      
+
       {/* Основной контент страницы */}
       <main style={{ paddingTop: `${MENU_CONSTANTS.TRIGGER_HEIGHT}px` }}>
-        
         {/* Hero секция */}
         <Hero
           // Можно передать кастомные значения или использовать дефолтные
@@ -57,24 +55,10 @@ export const Home = () => {
           // Дополнительные классы если нужны
           className="hero-fade-in"
         />
-
-        {
-
-<div className="space-y-6 max-w-4xl mx-auto">
-
-            {containers.map((container) => (
-              <ContainerCard
-                key={container.id}
-                container={container}
-                isOpen={openCardId === container.id}
-                onToggle={() => toggleCard(container.id)}
-                onOrder={() => handleOrder(container.id)}
-              />
-            ))}
-          </div>
-        }
-
-        
+        <Prices />
+        <ContainersTypes />
+        <Process />
       </main>
-    </div>  );
+    </div>
+  );
 };

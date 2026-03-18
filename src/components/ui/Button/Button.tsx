@@ -121,20 +121,20 @@ export const Button = ({
 
   const variantStyles = {
     dot: clsx(
-      "bg-grey/50 backdrop-blur-[2px] border border-grey text-white font-medium",
+      "bg-bbs-grey/50 backdrop-blur-[2px] border border-bbs-grey text-white font-medium",
       "transition-all duration-300",
       !disabled && "hover:brightness-110",
       disabled && "opacity-40 cursor-not-allowed",
     ),
     arrow: clsx(
-      "bg-grey/50 backdrop-blur-[2px] border border-grey text-white font-medium",
+      "bg-bbs-grey/50 backdrop-blur-[2px] border border-bbs-grey text-white font-medium",
       "transition-all duration-300",
       !disabled && "hover:brightness-110",
       disabled && "opacity-40 cursor-not-allowed",
     ),
     outline: clsx(
-      "bg-[var(--color-white)]/10 backdrop-blur-sm",
-      "text-[var(--color-white)] font-medium rounded-lg",
+      "bg-[var(--color-bbs-white)]/10 backdrop-blur-sm",
+      "text-[var(--color-bbs-white)] font-medium rounded-lg",
       "border-3 border-[var(--color-bright-green)]/70",
       "shadow-[inset_0_0_5px_var(--color-bright-green-shadow-15)]",
       "shadow-sm",
@@ -170,7 +170,7 @@ export const Button = ({
       type={type}
       onClick={handleClick}
       disabled={disabled}
-      className={buttonClass}
+      className={clsx(buttonClass, className)}
       style={
         width
           ? {

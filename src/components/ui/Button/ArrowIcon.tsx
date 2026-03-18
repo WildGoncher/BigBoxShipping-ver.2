@@ -10,7 +10,7 @@ interface ArrowIconProps {
 }
 
 const ArrowIcon = ({ 
-  glowIntensity = 0.3,
+  glowIntensity = 0.5,
   className = '',
   size = 'md',
   direction = 'down',
@@ -26,8 +26,8 @@ const ArrowIcon = ({
   const scale = scaleMap[size];
 
   const rotationMap = {
-    left: -90,
-    right: 90,
+    left: 90,
+    right: -90,
     up: 180,
     down: 0
   };

@@ -100,7 +100,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           <div className="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2">
-            <ArrowIcon variant="select" flipped={false}/>
+            <ArrowIcon direction="down" />
           </div>
         </div>
         <div className="min-h-[20px] px-1">

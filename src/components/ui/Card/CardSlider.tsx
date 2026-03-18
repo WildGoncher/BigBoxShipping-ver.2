@@ -31,7 +31,7 @@ transform-gpu
       ${className}
     `}
     >
-      <div className="pt-4 border-t border-white/20">{children}</div>
+      <div className="pt-4 text-bbs-white/85 border border-t-bbs-white/20 border-b-0 border-x-0">{children}</div>
     </div>
   );
 };

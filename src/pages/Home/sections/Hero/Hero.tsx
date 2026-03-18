@@ -35,13 +35,7 @@ export const Hero: FC<HeroProps> = ({
      */
     <section 
       className={`${HERO_STYLES.SECTION} ${className}`}
-      style={backgroundImage ? {
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      } : undefined}
-    >
+          >
       {/* Затемнение поверх фона для лучшей читаемости */}
       <div className={HERO_STYLES.OVERLAY} />
       
@@ -99,25 +93,6 @@ export const Hero: FC<HeroProps> = ({
             />
           </div>
         )}
-        
-        {/* Индикатор для скролла вниз (опционально) */}
-        <div className={HERO_STYLES.SCROLL_INDICATOR}>
-          <span className="sr-only">Прокрутите вниз</span>
-          <svg 
-            className="w-6 h-6 text-white" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-            />
-          </svg>
-        </div>
-        
       </div>
     </section>
   );

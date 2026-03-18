@@ -18,11 +18,10 @@ export const ContainerCard = ({
   return (
     <Card variant="default" isOpen={isOpen} onToggle={onToggle}>
       <CardHeader>
-        <h3 className="text-xl font-semibold text-white">{container.title}</h3>
-        <p className="text-gray-400 text-sm">{container.subtitle}</p>
+        <h3 className="text-xl font-semibold text-bbs-white">{container.title}</h3>
+        <p className="text-bbs-white/80 text-sm">{container.subtitle}</p>
       </CardHeader>
       <CardBody className="space-y-4">
-        {/* Изображение контейнера */}
         <div className="pb-4">
           <div className="w-full h-60  rounded flex items-center justify-center mb-3">
             <img 
@@ -31,11 +30,11 @@ export const ContainerCard = ({
               className="max-h-full max-w-full object-contain"
             />
           </div>
-          <h4 className="text-lg font-medium text-white mb-2">
+          <h4 className="text-lg font-medium text-bbs-white mb-2">
             {container.name}
           </h4>
           <p 
-            className="text-gray-300 text-md"
+            className="text-bbs-white text-md"
             dangerouslySetInnerHTML={{ __html: container.description }}
           />
         </div>
@@ -58,7 +57,7 @@ export const ContainerCard = ({
       <CardSlider>
         <ul className="space-y-2">
           {container.features.map((feature, idx) => (
-            <li key={idx} className="text-gray-300 text-md">
+            <li key={idx} className="text-bbs-gray-300 text-md">
               {feature}
             </li>
           ))}
